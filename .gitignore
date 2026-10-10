@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+# Data and experiment outputs
+/data/
+/outputs/
+results_*/
+**/results_*/
+*.pt
+*.pth
+*.ckpt
+# Local/editor
+.vscode/
+.idea/
+.DS_Store
+.env
+# Except explicitly reviewed figures, generated plots remain local
+**/gantt_*.png
+**/missed_comparison.png
