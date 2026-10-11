@@ -1,0 +1,23 @@
+{
+  "source_note": "Values copied from a user-shared CPU benchmark log (500 samples, 50 warmups, 1 thread); not independently reproduced here. Missing p99 not fabricated.",
+  "device": "cpu",
+  "samples": 500,
+  "warmup": 50,
+  "threads": 1,
+  "models": {
+    "small": {
+      "parameters": 50890,
+      "test_accuracy": 0.8469,
+      "p50_ms": 0.0318,
+      "p95_ms": 0.0504,
+      "max_observed_ms": 0.1176
+    },
+    "large": {
+      "parameters": 235146,
+      "test_accuracy": 0.8666,
+      "p50_ms": 0.0660,
+      "p95_ms": 0.1038,
+      "max_observed_ms": 0.2566
+    }
+  }
+}

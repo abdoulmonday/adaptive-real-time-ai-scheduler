@@ -81,7 +81,7 @@ python lessons/lesson4/compare_schedulers.py --benchmarks outputs/benchmarks.jso
 
 The first training run downloads **Fashion-MNIST** unless its data are already cached. Do not commit downloaded datasets or checkpoint binaries: they are ignored via `.gitignore`. Benchmarks vary across hardware and should be rerun on the target device.
 
-See [Lesson 4 instructions](lessons/lesson4/README.md) and the [French course notes](docs/COURSES_FR.md).
+See [Lesson 4 instructions](lessons/lesson4/README.md), the [French lesson 4 tutorial](docs/COURS4_FR.md) and the [French course notes](docs/COURSES_FR.md).
 
 For publishing this project to GitHub step by step, see [GitHub publication instructions in French](docs/GITHUB_PUBLISH_FR.md).
 
@@ -101,3 +101,26 @@ This project provides source code and tests rather than claiming experimental ha
 - Giorgio Buttazzo, *Hard Real-Time Computing Systems*, Springer.
 - MIT 6.5940, *TinyML and Efficient Deep Learning Computing*: https://hanlab.mit.edu/courses/2024-fall-65940
 - PyTorch: https://pytorch.org/tutorials/
+- Relevant research topic: *Deploying AI Workloads in Real-Time Systems*, LAAS-CNRS: https://www.laas.fr/fr/offres/deploying-ai-workloads-in-real-time-systems/
+
+## Lesson 5 — Microsecond scheduling and accuracy-aware model choice
+
+**Example training/CPU measurements reported by a course participant** (3 epochs, Fashion-MNIST, 500 CPU inference samples, batch=1, 1 thread; not reproduced independently here):
+
+| Model | Test accuracy | Parameters | p50 CPU | p95 CPU | Max observed |
+|---|---:|---:|---:|---:|---:|
+| Small MLP | 84.69% | 50,890 | 0.0318 ms | 0.0504 ms | 0.1176 ms |
+| Large MLP | 86.66% | 235,146 | 0.0660 ms | 0.1038 ms | 0.2566 ms |
+
+The large model improves accuracy by **1.97 percentage points** but takes approximately **2.06×** as long at p95. These are single-run observations and **NOT WCET guarantees**.
+
+The lesson-4 `--min-budget-ms 2` applies **2 ms to both models** and therefore masks their actual latency difference. Lesson 5 improves the **simulation resolution**, but still assumes empirical p95 as a hypothetical cost:
+
+```bash
+python lessons/lesson5/microsecond_scheduler.py --benchmarks outputs/benchmarks.json --deadline-us 12000
+python lessons/lesson5/microsecond_scheduler.py --benchmarks outputs/benchmarks.json --deadline-us 80
+python lessons/lesson5/select_model.py --benchmarks outputs/benchmarks.json --budget-us 80
+python -m unittest discover -s lessons/lesson5 -p 'test_*.py' -v
+```
+
+The 80-µs deadline is a **synthetic stress test**, not a requirement of the LAAS thesis or the Fashion-MNIST application. See [Lesson 5 guide](lessons/lesson5/README.md) and [reported example data](docs/example_data/benchmarks_user_reported.json). The model selector is a heuristic, not a real-time-certified adaptive scheduler.
