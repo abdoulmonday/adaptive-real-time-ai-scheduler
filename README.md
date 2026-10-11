@@ -101,7 +101,6 @@ This project provides source code and tests rather than claiming experimental ha
 - Giorgio Buttazzo, *Hard Real-Time Computing Systems*, Springer.
 - MIT 6.5940, *TinyML and Efficient Deep Learning Computing*: https://hanlab.mit.edu/courses/2024-fall-65940
 - PyTorch: https://pytorch.org/tutorials/
-- Relevant research topic: *Deploying AI Workloads in Real-Time Systems*, LAAS-CNRS: https://www.laas.fr/fr/offres/deploying-ai-workloads-in-real-time-systems/
 
 ## Lesson 5 — Microsecond scheduling and accuracy-aware model choice
 
